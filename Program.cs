@@ -1,6 +1,5 @@
 ﻿using GlossaryForEducation;
 
+Console.WriteLine("Please guess the word: \n");
 
-Console.WriteLine("Hello and welcome!");
-
-Swedish.PlaySE();
+EngToSwe.Play();
