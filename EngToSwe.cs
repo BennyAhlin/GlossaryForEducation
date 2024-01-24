@@ -20,7 +20,7 @@ public class EngToSwe
         int WordPoints;
         int HintIndex = -1;
         bool PlayGame = true;
-        
+
 
         while (PlayGame)
         {
@@ -65,13 +65,29 @@ public class EngToSwe
                 Console.WriteLine("Swedish word is: " + Underlines);
 
                 Console.WriteLine();
+                string? userInput = Console.ReadLine();
 
-                if (Console.ReadLine() == SwedishWord.ToLower())
+                if (userInput == SwedishWord.ToLower())
                 {
                     Console.WriteLine("Correct! The Swedish word was : " + SwedishWord);
                     WordPoints++;
                     Thread.Sleep(2000);
-                    List<string> NewPoints = new List<string> { EnglishWord + ",", SwedishWord + ",", WordPoints.ToString() };
+                    string[] Glossarys = File.ReadAllLines("../../../EngToSwe.csv", Encoding.UTF8);
+                    for (int i = 0; i < Glossarys.Length; i++)
+                    {
+                        string[] split = Glossarys[i].Split(',');
+
+                        if (split.Length >= 2 && split[1] == userInput)
+                        {
+                            if (split.Length >= 3)
+                            {
+                                split[2] = WordPoints.ToString();
+
+                                Glossarys[i] = string.Join(",", split);
+                            }
+                        }
+                    }
+                    File.WriteAllLines("../../../EngToSwe.csv", Glossarys, Encoding.UTF8);
                     SwedishWord = string.Empty;
                     EnglishWord = string.Empty;
                     Underlines = string.Empty;
